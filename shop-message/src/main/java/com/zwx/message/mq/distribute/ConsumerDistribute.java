@@ -12,6 +12,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 /**
+ * @author 庄文希
  * @classDesc: 功能描述:(消费消息 mq 从队列获取最新消息)
  */
 @Slf4j
@@ -20,6 +21,11 @@ public class ConsumerDistribute {
     @Autowired
     private SMSMailboxService smsMailboxService;
 
+    /**
+     * 接收生产者的消息
+     *
+     * @param json
+     */
     @JmsListener(destination = "mail_queue")
     public void distribute(String json) {
         log.info("###消息服务###收到消息,消息内容 json:{}", json);

@@ -9,12 +9,20 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author 庄文希
+ */
 @Slf4j
 @Service
 public class SMSMailboxService implements MessageAdapter {
     @Autowired
     private JavaMailSender mailSender; // 自动注入的Bean
 
+    /**
+     * 发送邮件的实现接口
+     *
+     * @param jsonObject
+     */
     @Override
     public void distribute(JSONObject jsonObject) {
         String mail = jsonObject.getString("mail");

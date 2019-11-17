@@ -1,5 +1,6 @@
 package com.zwx.api;
 
+import com.zwx.api.member.service.UserService;
 import org.springframework.cloud.netflix.feign.FeignClient;
 
 /**
@@ -7,5 +8,6 @@ import org.springframework.cloud.netflix.feign.FeignClient;
  * @create 2019-09-15 20:44
  */
 @FeignClient(name = "member")
-public interface MbUserService {
+public interface MbUserService extends UserService {
+
 }

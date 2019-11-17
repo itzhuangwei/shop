@@ -14,6 +14,12 @@ import java.util.Map;
 @RequestMapping("/member")
 public interface UserService {
 
+    /**
+     * 用户注册接口
+     *
+     * @param userEntity
+     * @return
+     */
     @PostMapping("/regist")
     public Map<String, Object> regist(@RequestBody UserEntity userEntity);
 }

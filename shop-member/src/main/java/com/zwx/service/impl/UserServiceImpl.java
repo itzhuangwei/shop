@@ -5,6 +5,7 @@ import com.zwx.api.member.entity.UserEntity;
 import com.zwx.api.member.service.UserService;
 import com.zwx.common.api.BaseApiService;
 import com.zwx.common.constants.MessageType;
+import com.zwx.dao.UserDao;
 import com.zwx.manage.UserServiceManage;
 import com.zwx.mq.producer.RegisterMailboxProducer;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.jms.Destination;
 import java.util.Map;
 
@@ -32,6 +34,9 @@ public class UserServiceImpl extends BaseApiService implements UserService {
     @Autowired
     private RegisterMailboxProducer registerMailboxProducer;
 
+    @Resource
+    private UserDao userDao;
+
     @Value("${messages.queue}")
     private String messageQueue;
 
@@ -48,6 +53,10 @@ public class UserServiceImpl extends BaseApiService implements UserService {
 
         try {
             //TODO 判断用户是否注册过
+            UserEntity resultMbUser = userDao.getUser(userEntity);
+            if (resultMbUser != null) {
+                return setResutParameterError("该手机号码已经被注册");
+            }
 
             userServiceManage.register(userEntity);
             //  注册成功后,调用消息服务接口,推送一条邮箱注册成功通知。
